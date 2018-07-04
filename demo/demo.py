@@ -9,11 +9,15 @@
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as psf
 
+README_PATH = "/home/michael/spark/README.md"
+# store the spark temp data
+TEMP_PATH = "/home/michael/python_project/spark-demo/temp"
+
 
 def demo():
 	spark = SparkSession.builder.appName("michael's first application").getOrCreate()
 
-	text_file = spark.read.text("/database/spark/spark-2.3.0-bin-hadoop2.7/README.md")
+	text_file = spark.read.text(README_PATH)
 
 	print("count:%d" % text_file.count())
 
@@ -30,9 +34,9 @@ def demo():
 
 	rdd = spark.sparkContext.parallelize(range(1, 4)).map(lambda x: (x, "a" * x))
 
-	rdd.saveAsSequenceFile("/database/spark_project/temp/temp_data.txt")
+	rdd.saveAsSequenceFile(TEMP_PATH)
 
-	print(sorted(spark.sparkContext.sequenceFile("/database/spark_project/temp/temp_data.txt").collect()))
+	print(sorted(spark.sparkContext.sequenceFile(TEMP_PATH).collect()))
 
 	spark.stop()
 
