@@ -18,7 +18,7 @@ def compute(object):
 
 
 if __name__ == '__main__':
-	conf = SparkConf().setMaster("local").setAppName("PageRank")
+	conf = SparkConf().setMaster("local[*]").setAppName("PageRank")
 	sc = SparkContext(conf=conf)
 
 	links = sc.parallelize([['A', ['B', 'C']], ['B', ['A', 'C']], ['C', ['A', 'B', 'D']], ['D', ['C']]]).partitionBy(
@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
 	ranks = links.map(lambda x: (x[0], 1))
 
-	for _ in range(2):
+	for _ in range(10):
 		contributes = links.join(ranks).flatMap(compute)
 		ranks = contributes.reduceByKey(lambda x, y: x + y).mapValues(lambda x: 0.15 + 0.85 * x)
 
