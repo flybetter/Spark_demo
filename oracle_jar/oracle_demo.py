@@ -9,6 +9,10 @@
 import cx_Oracle
 
 connection = cx_Oracle.connect('app/app@202.102.83.165/app')
+
+connection.cursor()
+
+
 print connection.version
 
 
