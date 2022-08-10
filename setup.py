@@ -13,6 +13,6 @@ setup(
 	version='1.0.0',
 	install_requires=[
 		"py4j==0.10.7",
-		"pyspark==2.3.1"
+		"pyspark==3.1.3"
 	]
 )
